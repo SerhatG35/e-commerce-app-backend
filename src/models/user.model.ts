@@ -6,13 +6,10 @@ export interface UserInput {
   email: string;
   name: string;
   password: string;
+  city: string;
 }
 
 export interface UserDocument extends UserInput, mongoose.Document {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -24,6 +21,7 @@ const userSchema = new mongoose.Schema(
     surname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    city: { type: String, required: true },
   },
   {
     timestamps: true,
@@ -33,9 +31,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
   let user = this as UserDocument;
 
-  if (!user.isModified("password")) {
-    return next();
-  }
+  if (!user.isModified("password")) return next();
 
   const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
 
