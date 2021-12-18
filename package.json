@@ -2,10 +2,10 @@
   "name": "e-commerce-app-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.ts",
+  "main": "./src/app.ts",
   "scripts": {
-    "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/app.ts",
-    "build": "ts-node src/app.ts"
+    "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/app.ts",
+    "build": "ts-node ./src/app.ts"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "nanoid": "^3.1.30",
     "pino": "^7.4.1",
     "response-time": "^2.3.2",
+    "ts-node": "^10.4.0",
     "zod": "^3.11.6"
   },
   "devDependencies": {
