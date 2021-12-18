@@ -7,7 +7,6 @@ import {
 } from "../service/session.service";
 import { validatePassword } from "../service/user.service";
 import { signJwt } from "../utils/jwt.utils";
-import config from "config";
 
 export async function createUserSessionHandler(req: Request, res: Response) {
   const user = await validatePassword(req.body);
