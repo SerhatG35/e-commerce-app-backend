@@ -12,6 +12,10 @@ export async function createUserHandler(
     return res.send(user);
   } catch (error: any) {
     log.error(error);
-    return res.status(409).send(error.message);
+    return res.status(409).send("This email address is already taken.");
   }
+}
+
+export async function getCurrentUser(req: Request, res: Response) {
+  return res.send(res.locals.user);
 }
