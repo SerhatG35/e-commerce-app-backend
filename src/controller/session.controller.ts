@@ -7,6 +7,7 @@ import {
 } from "../service/session.service";
 import { validatePassword } from "../service/user.service";
 import { signJwt } from "../utils/jwt.utils";
+import config from "config";
 
 export async function createUserSessionHandler(req: Request, res: Response) {
   const user = await validatePassword(req.body);
@@ -30,19 +31,19 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   res.cookie("accessToken", accessToken, {
     maxAge: 900000, // 15 mins
     httpOnly: true,
-    domain: "localhost",
+    domain: config.get("domain"),
     path: "/",
     sameSite: "strict",
-    secure: false,
+    secure: config.get("secure"),
   });
 
   res.cookie("refreshToken", refreshToken, {
     maxAge: 3.154e10, // 1 year
     httpOnly: true,
-    domain: "localhost",
+    domain: config.get("domain"),
     path: "/",
     sameSite: "strict",
-    secure: false,
+    secure: config.get("secure"),
   });
 
   return res.send({ accessToken, refreshToken });

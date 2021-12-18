@@ -9,5 +9,9 @@ export default {
   accessTokenPublicKey: ``,
   refreshTokenPrivateKey: ``,
   refreshTokenPublicKey: ``,
-  domain: process.env.NODE_ENV,
+  domain:
+    process.env.NODE_ENV === "development"
+      ? "localhost"
+      : "e-commerce-app-be.herokuapp",
+  secure: process.env.NODE_ENV === "development" ? false : true,
 };

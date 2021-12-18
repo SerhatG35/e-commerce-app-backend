@@ -2,6 +2,7 @@ import { get } from "lodash";
 import { Request, Response, NextFunction } from "express";
 import { verifyJwt } from "../utils/jwt.utils";
 import { reIssueAccessToken } from "../service/session.service";
+import config from "config";
 
 const deserializeUser = async (
   req: Request,
@@ -35,10 +36,10 @@ const deserializeUser = async (
       res.cookie("accessToken", newAccessToken, {
         maxAge: 900000, // 15 mins
         httpOnly: true,
-        domain: "localhost",
+        domain: config.get("domain"),
         path: "/",
         sameSite: "strict",
-        secure: false,
+        secure: config.get("secure"),
       });
     }
 

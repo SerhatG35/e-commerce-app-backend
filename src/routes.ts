@@ -1,4 +1,4 @@
-import { application, Express, Request, Response } from "express";
+import { Express, Request, Response } from "express";
 import {
   createUserSessionHandler,
   deleteSessionHandler,
