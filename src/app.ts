@@ -19,8 +19,7 @@ app.use(
     origin: config.get("origin"),
     credentials: true,
   })
-); 
-console.log(process.env.NODE_ENV);
+);
 
 app.use(deserializeUser);
 
