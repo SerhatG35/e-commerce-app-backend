@@ -2,10 +2,10 @@
   "name": "e-commerce-app-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/app.ts",
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/app.ts",
-    "build": "rm -rf build && tsc && ts-node build/src/app.js"
+    "build": "ts-node src/app.ts"
   },
   "author": "",
   "license": "ISC",

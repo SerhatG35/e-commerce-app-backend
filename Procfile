@@ -1,1 +1,1 @@
-web: rm -rf build && tsc && ts-node build/src/app.js
+web: ts-node src/app.ts
