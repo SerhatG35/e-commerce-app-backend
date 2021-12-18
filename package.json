@@ -4,7 +4,8 @@
   "description": "",
   "main": "./src/app.ts",
   "scripts": {
-    "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/app.ts"
+    "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/app.ts",
+    "start": "ts-node ./src/app.ts"
   },
   "author": "",
   "license": "ISC",
