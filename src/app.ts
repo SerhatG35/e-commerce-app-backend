@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 dotenv.config();
 import config from "config";
@@ -13,7 +14,6 @@ const port = config.get<number>("port");
 const app = express();
 
 app.use(express.json());
-console.log(process.env.NODE_ENV);
 
 app.use(
   cors({
@@ -21,6 +21,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(cookieParser());
 
 app.use(deserializeUser);
 
