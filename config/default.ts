@@ -4,7 +4,7 @@ export default {
   origin:
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://e-commerce-app-pink.vercel.app/",
+      : "https://e-commerce-app-pink.vercel.app",
   saltWorkFactor: 10,
   accessTokenTtl: "15m",
   refreshTokenTtl: "1y",
