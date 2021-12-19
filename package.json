@@ -5,7 +5,7 @@
   "main": "./src/app.ts",
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/app.ts",
-    "start": "ts-node ./src/app.ts"
+    "start": "rm -rf build && tsc && node build/src/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,10 +21,10 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.0.11",
     "nanoid": "^3.1.30",
-    "pino": "^7.4.1",
     "response-time": "^2.3.2",
-    "ts-node": "^10.4.0",
-    "zod": "^3.11.6",
+    "zod": "^3.11.6"
+  },
+  "devDependencies": {
     "typescript": "^4.5.2",
     "@types/bcrypt": "^5.0.0",
     "@types/body-parser": "^1.19.2",
@@ -39,6 +39,7 @@
     "@types/pino": "^7.0.5",
     "@types/response-time": "^2.3.5",
     "pino-pretty": "^7.2.0",
+    "pino": "^7.4.1",
     "ts-node-dev": "^1.1.8"
   },
   "engines": {
