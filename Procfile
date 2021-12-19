@@ -1,1 +1,1 @@
-web: rm -rf build && tsc && node build/src/app.js
+web: rm -rf build && tsc && NODE_ENV=production node build/src/app.js
