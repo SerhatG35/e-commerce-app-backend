@@ -15,6 +15,6 @@ export default {
   domain:
     process.env.NODE_ENV === "development"
       ? "localhost"
-      : "e-commerce-app-be.herokuapp",
+      : "e-commerce-app-pink.vercel.app",
   secure: process.env.NODE_ENV === "development" ? false : true,
 };
