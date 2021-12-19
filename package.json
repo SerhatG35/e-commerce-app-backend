@@ -5,7 +5,7 @@
   "main": "./src/app.ts",
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/app.ts",
-    "start": "rm -rf build && tsc && ts-node build/src/app.js"
+    "start": "rm -rf build && tsc &&node build/src/app.js"
   },
   "author": "",
   "license": "ISC",
