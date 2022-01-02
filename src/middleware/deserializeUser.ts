@@ -34,7 +34,7 @@ const deserializeUser = async (
       res.setHeader("x-access-token", newAccessToken);
 
       res.cookie("accessToken", newAccessToken, {
-        maxAge: 900000, // 15 mins
+        maxAge: 3600000, // 1 hour
         httpOnly: true,
         domain: config.get("domain"),
         path: "/",

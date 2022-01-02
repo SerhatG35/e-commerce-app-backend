@@ -28,7 +28,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   );
 
   res.cookie("accessToken", accessToken, {
-    maxAge: 900000, // 15 mins
+    maxAge: 3600000, // 1 hour
     httpOnly: true,
     domain: config.get("domain"),
     path: "/",

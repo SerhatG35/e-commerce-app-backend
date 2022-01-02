@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { omit } from "lodash";
 import { CreateUserInput } from "../schema/user.schema";
 import { createUser } from "../service/user.service";
 import log from "../utils/logger";
@@ -17,5 +18,15 @@ export async function createUserHandler(
 }
 
 export async function getCurrentUser(req: Request, res: Response) {
-  return res.send(res.locals.user);
+  return res.send(
+    omit(
+      res.locals.user,
+      "password",
+      "createdAt",
+      "updatedAt",
+      "__v",
+      "iat",
+      "exp"
+    )
+  );
 }
