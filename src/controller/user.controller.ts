@@ -18,15 +18,5 @@ export async function createUserHandler(
 }
 
 export async function getCurrentUser(req: Request, res: Response) {
-  return res.send(
-    omit(
-      res.locals.user,
-      "password",
-      "createdAt",
-      "updatedAt",
-      "__v",
-      "iat",
-      "exp"
-    )
-  );
+  return res.send(omit(res.locals.user, "password"));
 }
