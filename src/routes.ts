@@ -2,7 +2,9 @@ import { Express, Request, Response } from "express";
 import {
   createProductHandler,
   deleteProductHandler,
+  getAllProductHandler,
   getProductHandler,
+  getUserProducts,
   updateProductHandler,
 } from "./controller/product.controller";
 import {
@@ -46,7 +48,7 @@ const routes = (app: Express) => {
   app.get("/api/sessions", requireUser, getUserSessionsHandler);
 
   app.delete("/api/sessions", requireUser, deleteSessionHandler);
-
+  // ------------------
   app.post(
     "/api/products",
     [requireUser, validate(createProductSchema)],
@@ -58,6 +60,10 @@ const routes = (app: Express) => {
     [requireUser, validate(updateProductSchema)],
     updateProductHandler
   );
+
+  app.get("/api/:userId/products", requireUser, getUserProducts);
+
+  app.get("/api/all-products", getAllProductHandler);
 
   app.get(
     "/api/products/:productId",

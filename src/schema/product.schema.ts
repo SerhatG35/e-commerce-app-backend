@@ -7,7 +7,7 @@ const payload = {
     }),
     description: string({
       required_error: "Description is required",
-    }).max(40, "Description should be at max 40 characters long"),
+    }).max(100, "Description should be at max 100 characters long"),
     price: number({
       required_error: "Price is required",
     }),

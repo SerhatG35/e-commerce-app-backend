@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { omit } from "lodash";
 import {
   CreateProductInput,
   UpdateProductInput,
@@ -9,6 +10,7 @@ import {
   findAllProducts,
   findAndUpdateProduct,
   findProduct,
+  findUserProducts,
 } from "../service/product.service";
 
 export async function createProductHandler(
@@ -50,8 +52,19 @@ export async function getProductHandler(
   return res.send(product);
 }
 
+export async function getUserProducts(req: Request, res: Response) {
+  const userId = req.params.userId;
+  const userProducts = await findUserProducts({ userId });
+
+  return res.send(userProducts);
+}
+
 export async function getAllProductHandler(req: Request, res: Response) {
-  return await findAllProducts();
+  const allProducts = await findAllProducts();
+  const omittedProducts = allProducts.map((product) =>
+    omit(product, ["__v", "updatedAt"])
+  );
+  return res.send(omittedProducts);
 }
 
 export async function deleteProductHandler(

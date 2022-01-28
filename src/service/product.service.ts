@@ -27,9 +27,22 @@ export async function findProduct(
   }
 }
 
+export async function findUserProducts(
+  query: FilterQuery<ProductDocument>,
+  options: QueryOptions = { lean: true }
+) {
+  try {
+    const result = await ProductModel.find({ user: query.userId });
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
 export async function findAllProducts() {
   try {
-    return ProductModel.find();
+    return ProductModel.find().lean();
   } catch (error: any) {
     console.error(error);
     throw error;
