@@ -24,7 +24,28 @@ export const createUserSchema = object({
   }),
 });
 
+export const updateUserSchema = object({
+  body: object({
+    name: string({
+      required_error: "Name is required",
+    }),
+    surname: string({
+      required_error: "Surname is required",
+    }),
+    city: string({ required_error: "City is required" }),
+    email: string({
+      required_error: "Email is required",
+    }).email("Not a valid email"),
+  }),
+  params: object({
+    userId: string({
+      required_error: "userId is required",
+    }),
+  }),
+});
+
 export type CreateUserInput = Omit<
   TypeOf<typeof createUserSchema>,
   "body.passwordConfirmation"
 >;
+export type UpdateUserInput = TypeOf<typeof updateUserSchema>;

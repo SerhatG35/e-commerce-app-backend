@@ -15,6 +15,7 @@ import {
 import {
   createUserHandler,
   getCurrentUser,
+  updateUserHandler,
 } from "./controller/user.controller";
 import requireUser from "./middleware/requireUser";
 import validate from "./middleware/validateResource";
@@ -25,7 +26,7 @@ import {
   updateProductSchema,
 } from "./schema/product.schema";
 import { createSessionSchema } from "./schema/session.schema";
-import { createUserSchema } from "./schema/user.schema";
+import { createUserSchema, updateUserSchema } from "./schema/user.schema";
 
 const routes = (app: Express) => {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
@@ -38,6 +39,12 @@ const routes = (app: Express) => {
 
   //user registration
   app.post("/api/users", validate(createUserSchema), createUserHandler);
+
+  app.put(
+    "/api/user/:userId",
+    [requireUser, validate(updateUserSchema)],
+    updateUserHandler
+  );
 
   app.post(
     "/api/sessions",
