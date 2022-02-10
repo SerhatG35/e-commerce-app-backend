@@ -5,10 +5,10 @@ export default {
   saltWorkFactor: 10,
   accessTokenTtl: "1h",
   refreshTokenTtl: "1y",
-  accessTokenPrivateKey: ``,
-  accessTokenPublicKey: ``,
-  refreshTokenPrivateKey: ``,
-  refreshTokenPublicKey: ``,
+  accessTokenPrivateKey: "",
+  accessTokenPublicKey: "",
+  refreshTokenPrivateKey: "",
+  refreshTokenPublicKey: "",
   domain:
     process.env.NODE_ENV === "development"
       ? "localhost"
