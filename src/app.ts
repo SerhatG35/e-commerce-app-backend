@@ -28,7 +28,6 @@ app.use(deserializeUser);
 
 app.listen(port, async () => {
   logger.info(`\nApp is running at http://localhost:${port}`);
-  console.log(config.get<string>("accessTokenPublicKey"));
   await connect();
 
   routes(app);

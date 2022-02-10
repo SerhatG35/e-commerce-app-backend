@@ -16,6 +16,8 @@ const deserializeUser = async (
   const refreshToken =
     get(req, "cookies.refreshToken") || get(req, "headers.x-refresh");
 
+  console.log(accessToken + " hello");
+
   if (!accessToken) {
     return next();
   }
@@ -44,7 +46,7 @@ const deserializeUser = async (
     }
 
     const result = verifyJwt(newAccessToken as string, "accessTokenPublicKey");
-    
+
     res.locals.user = result.decoded;
     return next();
   }
