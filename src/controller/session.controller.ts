@@ -27,6 +27,24 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     { expiresIn: config.get("refreshTokenTtl") }
   );
 
+  res.cookie("accessToken", accessToken, {
+    maxAge: 3600000,
+    httpOnly: true,
+    domain: config.get("domain"),
+    path: "/",
+    sameSite: "strict",
+    secure: config.get("secure"),
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    maxAge: 3.154e10,
+    httpOnly: true,
+    domain: config.get("domain"),
+    path: "/",
+    sameSite: "strict",
+    secure: config.get("secure"),
+  });
+
   return res.send({ accessToken, refreshToken });
 }
 
@@ -42,6 +60,9 @@ export async function deleteSessionHandler(req: Request, res: Response) {
   const sessionId = res.locals.user.session;
 
   await updateSession({ _id: sessionId }, { valid: false });
+
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
 
   return res.send({
     accessToken: null,

@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: config.get("origin"),
+    origin: config.get<string>("origin"),
     credentials: true,
   })
 );
@@ -25,6 +25,7 @@ app.use(
 app.use(cookieParser());
 
 app.use(deserializeUser);
+console.log(config.get("domain"));
 
 app.listen(port, async () => {
   logger.info(`\nApp is running at http://localhost:${port}`);
