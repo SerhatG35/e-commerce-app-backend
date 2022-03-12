@@ -54,9 +54,11 @@ export async function getProductHandler(
 
 export async function getUserProducts(req: Request, res: Response) {
   const userId = req.params.userId;
-  const userProducts = await findUserProducts({ userId });
-
-  return res.send(userProducts);
+  try {
+    return res.send(await findUserProducts({ userId }));
+  } catch (error) {
+    res.status(404).send("There are no product associated with this user id.");
+  }
 }
 
 export async function getAllProductHandler(req: Request, res: Response) {

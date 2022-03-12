@@ -5,6 +5,7 @@ import {
   createUser,
   findAndUpdateUser,
   findUser,
+  getUserInfo,
 } from "../service/user.service";
 import log from "../utils/logger";
 
@@ -16,7 +17,6 @@ export async function createUserHandler(
     const user = await createUser(req.body);
     return res.send(user);
   } catch (error: any) {
-    log.error(error);
     return res.status(409).send("This email address is already taken.");
   }
 }
@@ -38,5 +38,10 @@ export async function updateUserHandler(
 }
 
 export async function getCurrentUser(req: Request, res: Response) {
-  return res.send(omit(res.locals.user, "password"));
+  const userId = req.params.userId;
+  try {
+    return res.send(omit(await getUserInfo(userId), "password"));
+  } catch (error) {
+    res.status(404).send("Can't find user with this user id");
+  }
 }

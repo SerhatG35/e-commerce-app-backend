@@ -24,17 +24,11 @@ export async function findProduct(productId: string) {
   }
 }
 
-export async function findUserProducts(
-  query: FilterQuery<ProductDocument>,
-  options: QueryOptions = { lean: true }
-) {
-  try {
-    const result = await ProductModel.find({ user: query.userId });
-    return result;
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
+export async function findUserProducts(query: FilterQuery<ProductDocument>) {
+  const x = ProductModel.find({ user: query.userId });
+  console.log(x);
+
+  return x;
 }
 
 export async function findAllProducts() {

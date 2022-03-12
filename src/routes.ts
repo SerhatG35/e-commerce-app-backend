@@ -34,7 +34,7 @@ const routes = (app: Express) => {
     res.send(process.env.NODE_ENV)
   );
 
-  app.get("/api/me", requireUser, getCurrentUser);
+  app.get("/api/user/:userId", requireUser, getCurrentUser);
 
   //user registration
   app.post("/api/users", validate(createUserSchema), createUserHandler);

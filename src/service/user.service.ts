@@ -41,3 +41,7 @@ export async function findAndUpdateUser(
 ) {
   return UserModel.findByIdAndUpdate(id, { ...update }, options);
 }
+
+export async function getUserInfo(userId: string) {
+  return UserModel.findById({ _id: userId });
+}
