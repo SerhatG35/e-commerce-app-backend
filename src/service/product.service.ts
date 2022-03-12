@@ -14,12 +14,9 @@ export async function createProduct(input: ProductInput) {
   }
 }
 
-export async function findProduct(
-  query: FilterQuery<ProductDocument>,
-  options: QueryOptions = { lean: true }
-) {
+export async function findProduct(productId: string) {
   try {
-    const result = await ProductModel.findOne(query, {}, options);
+    const result = await ProductModel.findOne({ _id: productId });
     return result;
   } catch (e) {
     console.error(e);

@@ -22,7 +22,6 @@ import validate from "./middleware/validateResource";
 import {
   createProductSchema,
   deleteProductSchema,
-  getProductSchema,
   updateProductSchema,
 } from "./schema/product.schema";
 import { createSessionSchema } from "./schema/session.schema";
@@ -72,11 +71,7 @@ const routes = (app: Express) => {
 
   app.get("/api/all-products", getAllProductHandler);
 
-  app.get(
-    "/api/products/:productId",
-    validate(getProductSchema),
-    getProductHandler
-  );
+  app.get("/api/products/:productId", getProductHandler);
 
   app.delete(
     "/api/products/:productId",
