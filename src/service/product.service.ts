@@ -5,13 +5,7 @@ import ProductModel, {
 } from "../models/product.model";
 
 export async function createProduct(input: ProductInput) {
-  try {
-    const result = await ProductModel.create(input);
-    return result;
-  } catch (e: any) {
-    console.error(e);
-    throw e;
-  }
+  return await ProductModel.create(input);
 }
 
 export async function findProduct(productId: string) {
@@ -25,10 +19,7 @@ export async function findProduct(productId: string) {
 }
 
 export async function findUserProducts(query: FilterQuery<ProductDocument>) {
-  const x = ProductModel.find({ user: query.userId });
-  console.log(x);
-
-  return x;
+  return ProductModel.find({ user: query.userId });
 }
 
 export async function findAllProducts() {

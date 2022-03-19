@@ -5,9 +5,12 @@ const payload = {
     title: string({
       required_error: "Title is required",
     }),
+    category: string({
+      required_error: "Category is required",
+    }),
     description: string({
       required_error: "Description is required",
-    }).max(100, "Description should be at max 100 characters long"),
+    }).max(500, "Description should be at max 500 characters long"),
     price: number({
       required_error: "Price is required",
     }),
