@@ -18,9 +18,10 @@ export async function createProductHandler(
   res: Response
 ) {
   const userId = res.locals.user._id;
+  const userNameAndSurname = `${res.locals.user.name} ${res.locals.user.surname}`;
   const body = req.body;
   try {
-    const product = await createProduct({ ...body, user: userId });
+    const product = await createProduct({ ...body, user: userId , userNameAndSurname});
     return res.send(product);
   } catch (error) {
     res.send(error);
