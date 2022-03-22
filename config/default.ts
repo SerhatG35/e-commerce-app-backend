@@ -1,7 +1,11 @@
 export default {
   port: 3001,
   dbUri: "",
-  origin: ["http://localhost:3000", "https://www.e-commerce-app.me"],
+  origin: [
+    "http://localhost:3000",
+    "https://www.e-commerce-app.me",
+    "https://www.dashboard.e-commerce-app.me",
+  ],
   saltWorkFactor: 10,
   accessTokenTtl: "1h",
   refreshTokenTtl: "1y",
