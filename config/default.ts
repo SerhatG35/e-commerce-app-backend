@@ -5,6 +5,7 @@ export default {
     "http://localhost:3000",
     "https://www.e-commerce-app.me",
     "https://www.dashboard.e-commerce-app.me",
+    "https://dashboard.e-commerce-app.me",
   ],
   saltWorkFactor: 10,
   accessTokenTtl: "1h",

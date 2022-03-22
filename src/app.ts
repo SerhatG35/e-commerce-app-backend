@@ -17,7 +17,7 @@ app.use(express.json({ limit: "5mb" }));
 
 app.use(
   cors({
-    origin: config.get<string>("origin"),
+    origin: config.get<string[]>("origin"),
     credentials: true,
   })
 );
