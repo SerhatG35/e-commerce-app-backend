@@ -32,7 +32,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     httpOnly: true,
     domain: config.get("domain"),
     path: "/",
-    sameSite: "lax",
+    sameSite: "none",
     secure: config.get("secure"),
   });
 
@@ -41,7 +41,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     httpOnly: true,
     domain: config.get("domain"),
     path: "/",
-    sameSite: "lax",
+    sameSite: "none",
     secure: config.get("secure"),
   });
 
