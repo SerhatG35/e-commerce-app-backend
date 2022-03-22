@@ -38,7 +38,7 @@ const deserializeUser = async (
         httpOnly: true,
         domain: config.get("domain"),
         path: "/",
-        sameSite: "strict",
+        sameSite: "lax",
         secure: config.get("secure"),
       });
     }

@@ -32,7 +32,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     httpOnly: true,
     domain: config.get("domain"),
     path: "/",
-    sameSite: "strict",
+    sameSite: "lax",
     secure: config.get("secure"),
   });
 
@@ -41,7 +41,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     httpOnly: true,
     domain: config.get("domain"),
     path: "/",
-    sameSite: "strict",
+    sameSite: "lax",
     secure: config.get("secure"),
   });
 
@@ -61,8 +61,8 @@ export async function deleteSessionHandler(req: Request, res: Response) {
 
   await updateSession({ _id: sessionId }, { valid: false });
 
-  // res.clearCookie("accessToken");
-  // res.clearCookie("refreshToken");
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
 
   return res.send({
     accessToken: null,
