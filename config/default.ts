@@ -1,7 +1,7 @@
 export default {
   port: 3001,
   dbUri: "",
-  origin: ["http://localhost:3000", "https://e-commerce-app-pink.vercel.app"],
+  origin: ["http://localhost:3000", "https://e-commerce-app.me"],
   saltWorkFactor: 10,
   accessTokenTtl: "1h",
   refreshTokenTtl: "1y",
@@ -10,8 +10,6 @@ export default {
   refreshTokenPrivateKey: "",
   refreshTokenPublicKey: "",
   domain:
-    process.env.NODE_ENV === "development"
-      ? "localhost"
-      : "e-commerce-app-pink.vercel.app",
+    process.env.NODE_ENV === "development" ? "localhost" : "e-commerce-app",
   secure: process.env.NODE_ENV === "development" ? false : true,
 };
