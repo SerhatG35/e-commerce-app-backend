@@ -4,18 +4,23 @@ const payload = {
   body: object({
     title: string({
       required_error: "Title is required",
-    }),
+    })
+      .max(50, "Title can't be over 50 characters.")
+      .min(3, "Title must be at least 3 characters."),
     category: string({
-      required_error: "Category is required",
+      required_error: "Category is required.",
     }),
     description: string({
-      required_error: "Description is required",
-    }).max(500, "Description should be at max 500 characters long"),
+      required_error: "Description is required.",
+    })
+      .max(500, "Description should be at max 500 characters long.")
+      .min(10, "Description must be at least 10 characters long."),
     price: number({
-      required_error: "Price is required",
-    }),
+      required_error: "Price is required.",
+      invalid_type_error: "Price must be a number.",
+    }).min(1),
     image: string({
-      required_error: "Image is required",
+      required_error: "Image is required.",
     }),
   }),
 };
@@ -23,7 +28,7 @@ const payload = {
 const params = {
   params: object({
     productId: string({
-      required_error: "productId is required",
+      required_error: "productId is required.",
     }),
   }),
 };
