@@ -21,7 +21,11 @@ export async function createProductHandler(
   const userNameAndSurname = `${res.locals.user.name} ${res.locals.user.surname}`;
   const body = req.body;
   try {
-    const product = await createProduct({ ...body, user: userId , userNameAndSurname});
+    const product = await createProduct({
+      ...body,
+      user: userId,
+      userNameAndSurname,
+    });
     return res.send(product);
   } catch (error) {
     res.send(error);
@@ -67,7 +71,7 @@ export async function getUserProducts(req: Request, res: Response) {
 }
 
 export async function getAllProductHandler(req: Request, res: Response) {
-  const allProducts = await findAllProducts();
+  const allProducts = await findAllProducts(req.query);
   const omittedProducts = allProducts.map((product) =>
     omit(product, ["__v", "updatedAt"])
   );

@@ -22,9 +22,17 @@ export async function findUserProducts(query: FilterQuery<ProductDocument>) {
   return ProductModel.find({ user: query.userId });
 }
 
-export async function findAllProducts() {
+export async function findAllProducts(query: {
+  category?: string;
+  priceRange?: number[];
+}) {
   try {
-    return ProductModel.find().lean();
+    return ProductModel.find({
+      ...(query.category ? { category: query.category } : {}),
+      ...(query.priceRange
+        ? { price: { $gt: query.priceRange[0], $lte: query.priceRange[1] } }
+        : {}),
+    }).lean();
   } catch (error: any) {
     console.error(error);
     throw error;
