@@ -5,7 +5,7 @@ const payload = {
     title: string({
       required_error: "Title is required",
     })
-      .max(50, "Title can't be over 50 characters.")
+      .max(30, "Title can't be over 30 characters.")
       .min(3, "Title must be at least 3 characters."),
     category: string({
       required_error: "Category is required.",

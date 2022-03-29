@@ -27,12 +27,21 @@ export async function findAllProducts(query: {
   priceRange?: number[];
 }) {
   try {
-    return ProductModel.find({
-      ...(query.category ? { category: query.category } : {}),
-      ...(query.priceRange
-        ? { price: { $gt: query.priceRange[0], $lte: query.priceRange[1] } }
-        : {}),
-    }).lean();
+    return {
+      productsList: await ProductModel.find({
+        ...(query.category ? { category: query.category } : {}),
+        ...(query.priceRange
+          ? {
+              price: {
+                $gt: query.priceRange[0],
+                $lte: query.priceRange[1],
+              },
+            }
+          : {}),
+      }).lean(),
+      highestPrice: (await ProductModel.findOne().sort({ price: -1 }).limit(1))
+        ?.price,
+    };
   } catch (error: any) {
     console.error(error);
     throw error;

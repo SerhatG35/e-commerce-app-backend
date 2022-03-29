@@ -71,11 +71,8 @@ export async function getUserProducts(req: Request, res: Response) {
 }
 
 export async function getAllProductHandler(req: Request, res: Response) {
-  const allProducts = await findAllProducts(req.query);
-  const omittedProducts = allProducts.map((product) =>
-    omit(product, ["__v", "updatedAt"])
-  );
-  return res.send(omittedProducts);
+  const products = await findAllProducts(req.query);
+  return res.send(products);
 }
 
 export async function deleteProductHandler(
