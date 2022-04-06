@@ -39,8 +39,9 @@ export async function findAllProducts(query: {
             }
           : {}),
       }).lean(),
-      highestPrice: (await ProductModel.findOne().sort({ price: -1 }).limit(1))
-        ?.price,
+      highestPrice: (
+        await ProductModel.findOne().sort({ price: -1 }).limit(1).lean()
+      )?.price,
     };
   } catch (error: any) {
     console.error(error);
