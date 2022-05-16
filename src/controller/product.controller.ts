@@ -86,6 +86,6 @@ export async function deleteProductHandler(
 
   if (String(product.user) !== userId) return res.sendStatus(403);
 
-  await deleteProduct({ productId });
+  await deleteProduct(productId);
   return res.sendStatus(200);
 }

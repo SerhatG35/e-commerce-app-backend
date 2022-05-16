@@ -57,6 +57,6 @@ export async function findAndUpdateProduct(
   return ProductModel.findOneAndUpdate(query, update, options);
 }
 
-export async function deleteProduct(query: FilterQuery<ProductDocument>) {
-  return ProductModel.deleteOne(query);
+export async function deleteProduct(productId: string) {
+  return ProductModel.findByIdAndDelete(productId);
 }
