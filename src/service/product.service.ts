@@ -3,6 +3,8 @@ import ProductModel, {
   ProductDocument,
   ProductInput,
 } from "../models/product.model";
+import PurchaseModel from "../models/purchase.model";
+import { ProductRequestPayloadType } from "../schema/purchase.schema";
 
 export async function createProduct(input: ProductInput) {
   return await ProductModel.create(input);
@@ -59,4 +61,8 @@ export async function findAndUpdateProduct(
 
 export async function deleteProduct(productId: string) {
   return ProductModel.findByIdAndDelete(productId);
+}
+
+export async function sendPurchaseRequest(payload: ProductRequestPayloadType) {
+  return PurchaseModel.create(payload);
 }

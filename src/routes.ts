@@ -7,6 +7,7 @@ import {
   getUserProducts,
   updateProductHandler,
 } from "./controller/product.controller";
+import { purchaseRequestHandler } from './controller/purchase.contoller';
 import {
   createUserSessionHandler,
   deleteSessionHandler,
@@ -24,6 +25,7 @@ import {
   deleteProductSchema,
   updateProductSchema,
 } from "./schema/product.schema";
+import { purchaseRequestSchema } from "./schema/purchase.schema";
 import { createSessionSchema } from "./schema/session.schema";
 import { createUserSchema, updateUserSchema } from "./schema/user.schema";
 
@@ -77,6 +79,12 @@ const routes = (app: Express) => {
     "/api/products/:productId",
     [requireUser, validate(deleteProductSchema)],
     deleteProductHandler
+  );
+
+  app.post(
+    "/api/purchase-request/:productId",
+    [requireUser, validate(purchaseRequestSchema)],
+    purchaseRequestHandler
   );
 };
 

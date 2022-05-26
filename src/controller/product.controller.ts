@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { omit } from "lodash";
 import {
   CreateProductInput,
   UpdateProductInput,
