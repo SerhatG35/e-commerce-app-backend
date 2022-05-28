@@ -4,10 +4,14 @@ export const createUserSchema = object({
   body: object({
     name: string({
       required_error: "Name is required",
-    }),
+    })
+      .min(3)
+      .max(20),
     surname: string({
       required_error: "Surname is required",
-    }),
+    })
+      .min(3)
+      .max(20),
     password: string({
       required_error: "Password is required",
     }).min(6, "Password too short - should be 6 chars minimum"),
