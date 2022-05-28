@@ -62,7 +62,6 @@ export async function deleteSessionHandler(req: Request, res: Response) {
   await updateSession({ _id: sessionId }, { valid: false });
 
   res.clearCookie("accessToken", {
-    path: "/",
     httpOnly: true,
     domain: config.get("domain"),
     path: "/",
@@ -70,7 +69,6 @@ export async function deleteSessionHandler(req: Request, res: Response) {
     secure: config.get("secure"),
   });
   res.clearCookie("refreshToken", {
-    path: "/",
     httpOnly: true,
     domain: config.get("domain"),
     path: "/",
