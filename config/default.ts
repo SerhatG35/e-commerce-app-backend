@@ -15,6 +15,6 @@ export default {
   refreshTokenPrivateKey: "",
   refreshTokenPublicKey: "",
   domain:
-    process.env.NODE_ENV === "development" ? "localhost" : "e-commerce-app.me",
+    process.env.NODE_ENV === "development" ? "localhost" : ".e-commerce-app.me",
   secure: process.env.NODE_ENV === "development" ? false : true,
 };
