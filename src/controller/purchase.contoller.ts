@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { findProduct, sendPurchaseRequest } from "../service/product.service";
-import { checkIfBuyerAlreadyHasRequest } from "../service/purchase.service";
+import {
+  checkIfBuyerAlreadyHasRequest,
+  findUserPurchaseRequests,
+} from "../service/purchase.service";
 import { findUser } from "../service/user.service";
 
 export async function purchaseRequestHandler(req: Request, res: Response) {
@@ -15,9 +18,8 @@ export async function purchaseRequestHandler(req: Request, res: Response) {
 
   const response = await checkIfBuyerAlreadyHasRequest({
     userId: payload.buyerId,
+    productId,
   });
-
-  console.log(response);
 
   if (response && response.length > 0) {
     return res
@@ -28,4 +30,18 @@ export async function purchaseRequestHandler(req: Request, res: Response) {
   await sendPurchaseRequest(payload);
 
   return res.sendStatus(200);
+}
+
+export async function getPurchaseRequestHandler(req: Request, res: Response) {
+  const userId = req.params.userId;
+
+  const user = await findUser({ userId });
+  if (!user) return res.sendStatus(404);
+
+  const purchaseRequests = await findUserPurchaseRequests({ userId });
+
+  if (!purchaseRequests)
+    return res.status(404).send("No purchase request was found.");
+
+  return res.send(purchaseRequests);
 }
