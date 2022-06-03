@@ -15,3 +15,15 @@ export async function findUserPurchaseRequests(
 ) {
   return PurchaseModel.find({ sellerId: query.userId });
 }
+
+export async function findPurchaseRequest(
+  query: FilterQuery<PurchaseDocument>
+) {
+  return PurchaseModel.findById(query.purchaseId);
+}
+
+export async function deletePurchaseRequest(
+  query: FilterQuery<PurchaseDocument>
+) {
+  return PurchaseModel.findByIdAndDelete(query.purchaseId);
+}

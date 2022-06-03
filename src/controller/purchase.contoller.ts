@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { findProduct, sendPurchaseRequest } from "../service/product.service";
 import {
   checkIfBuyerAlreadyHasRequest,
+  deletePurchaseRequest,
+  findPurchaseRequest,
   findUserPurchaseRequests,
 } from "../service/purchase.service";
 import { findUser } from "../service/user.service";
@@ -43,5 +45,28 @@ export async function getPurchaseRequestHandler(req: Request, res: Response) {
   if (!purchaseRequests)
     return res.status(404).send("No purchase request was found.");
 
+  if (purchaseRequests.length === 0)
+    return res.status(404).send("No purchase request was found.");
+
   return res.send(purchaseRequests);
+}
+
+export async function rejectPurchaseRequestHandler(
+  req: Request,
+  res: Response
+) {
+  const purchaseId = req.params.purchaseId;
+
+  const purchaseRequest = await findPurchaseRequest({ purchaseId });
+  if (!purchaseRequest)
+    return res.status(404).send("No purchase request was found.");
+
+  const response = await deletePurchaseRequest({ purchaseId });
+
+  if (!response)
+    return res
+      .status(404)
+      .send("Problem occured while rejecting purchase request.");
+
+  return res.send(response);
 }

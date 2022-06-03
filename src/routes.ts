@@ -7,7 +7,7 @@ import {
   getUserProducts,
   updateProductHandler,
 } from "./controller/product.controller";
-import { getPurchaseRequestHandler, purchaseRequestHandler } from './controller/purchase.contoller';
+import { getPurchaseRequestHandler, purchaseRequestHandler, rejectPurchaseRequestHandler } from './controller/purchase.contoller';
 import {
   createUserSessionHandler,
   deleteSessionHandler,
@@ -91,6 +91,12 @@ const routes = (app: Express) => {
     "/api/get-purchase-requests/:userId",
     requireUser,
     getPurchaseRequestHandler
+  );
+
+  app.delete(
+    "/api/reject-purchase-request/:purchaseId",
+    requireUser,
+    rejectPurchaseRequestHandler
   );
 };
 
