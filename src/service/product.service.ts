@@ -35,7 +35,7 @@ export async function findAllProducts(query: {
         ...(query.priceRange
           ? {
               price: {
-                $gt: query.priceRange[0],
+                $gte: query.priceRange[0],
                 $lte: query.priceRange[1],
               },
             }
