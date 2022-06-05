@@ -10,6 +10,8 @@ export interface PurchasePayload {
   buyerName: string;
   sellerId: string;
   sellerName: string;
+  isApprovedForSelling: boolean;
+  approvedUserId: string | undefined;
 }
 
 export interface PurchaseDocument extends PurchasePayload, mongoose.Document {
@@ -28,6 +30,7 @@ const purchaseProductSchema = new mongoose.Schema(
     buyerName: { type: String, required: true },
     sellerId: { type: String, required: true },
     sellerName: { type: String, required: true },
+    approvedUserId: { type: String, default: undefined },
   },
   {
     timestamps: true,

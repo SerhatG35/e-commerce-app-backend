@@ -7,7 +7,12 @@ import {
   getUserProducts,
   updateProductHandler,
 } from "./controller/product.controller";
-import { getPurchaseRequestHandler, purchaseRequestHandler, rejectPurchaseRequestHandler } from './controller/purchase.contoller';
+import {
+  approvePurchaseRequestHandler,
+  getPurchaseRequestHandler,
+  purchaseRequestHandler,
+  rejectPurchaseRequestHandler,
+} from "./controller/purchase.contoller";
 import {
   createUserSessionHandler,
   deleteSessionHandler,
@@ -97,6 +102,12 @@ const routes = (app: Express) => {
     "/api/reject-purchase-request/:purchaseId",
     requireUser,
     rejectPurchaseRequestHandler
+  );
+
+  app.post(
+    "/api/approve-purchase-request/:purchaseId",
+    requireUser,
+    approvePurchaseRequestHandler
   );
 };
 

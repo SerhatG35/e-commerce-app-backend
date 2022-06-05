@@ -2,11 +2,13 @@ import { Request, Response } from "express";
 import { findProduct, sendPurchaseRequest } from "../service/product.service";
 import {
   checkIfBuyerAlreadyHasRequest,
+  checkIfProductAlreadyApproved,
   deletePurchaseRequest,
   findPurchaseRequest,
   findUserPurchaseRequests,
   findUserSendedPurchaseRequests,
   isUserAssociatedWithThisProduct,
+  setPurchaseRequestStatusToApproved,
 } from "../service/purchase.service";
 import { findUser } from "../service/user.service";
 
@@ -68,10 +70,10 @@ export async function rejectPurchaseRequestHandler(
   if (!purchaseRequest)
     return res.status(404).send("No purchase request was found.");
 
-  const sellersPurchaseRequest = await isUserAssociatedWithThisProduct({
+  const isUserAssociated = await isUserAssociatedWithThisProduct({
     userId,
   });
-  if (!sellersPurchaseRequest)
+  if (!isUserAssociated)
     return res
       .status(404)
       .send("This purchase request is not associated with this user.");
@@ -82,6 +84,43 @@ export async function rejectPurchaseRequestHandler(
     return res
       .status(404)
       .send("Problem occured while rejecting purchase request.");
+
+  return res.send(response);
+}
+
+export async function approvePurchaseRequestHandler(
+  req: Request,
+  res: Response
+) {
+  const userId = res.locals.user._id;
+  const purchaseId = req.params.purchaseId;
+  const payload = req.body;
+
+  const purchaseRequest = await findPurchaseRequest({ purchaseId });
+  if (!purchaseRequest)
+    return res.status(404).send("No purchase request was found.");
+
+  const isUserAssociated = await isUserAssociatedWithThisProduct({
+    userId,
+  });
+  if (!isUserAssociated)
+    return res
+      .status(404)
+      .send("This purchase request is not associated with this user.");
+
+  const isProductAlreadyApproved = await checkIfProductAlreadyApproved({
+    productId: purchaseRequest.productId,
+  });
+
+  if (!!isProductAlreadyApproved)
+    return res.status(404).send("This product is already approved for sale.");
+
+  const response = await setPurchaseRequestStatusToApproved({
+    purchaseId,
+    approvedUserId: payload.approvedUserId,
+  });
+
+  if (!response) return res.status(404);
 
   return res.send(response);
 }
