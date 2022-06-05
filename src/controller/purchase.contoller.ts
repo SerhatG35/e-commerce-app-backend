@@ -5,6 +5,8 @@ import {
   deletePurchaseRequest,
   findPurchaseRequest,
   findUserPurchaseRequests,
+  findUserSendedPurchaseRequests,
+  isUserAssociatedWithThisProduct,
 } from "../service/purchase.service";
 import { findUser } from "../service/user.service";
 
@@ -40,26 +42,39 @@ export async function getPurchaseRequestHandler(req: Request, res: Response) {
   const user = await findUser({ userId });
   if (!user) return res.sendStatus(404);
 
-  const purchaseRequests = await findUserPurchaseRequests({ userId });
-
-  if (!purchaseRequests)
-    return res.status(404).send("No purchase request was found.");
-
-  if (purchaseRequests.length === 0)
-    return res.status(404).send("No purchase request was found.");
-
-  return res.send(purchaseRequests);
+  Promise.all([
+    await findUserPurchaseRequests({ userId }),
+    await findUserSendedPurchaseRequests({ userId }),
+  ])
+    .then((result) => {
+      return res.send({
+        receivedPurchaseRequests: result[0],
+        sendedPurchaseRequests: result[1],
+      });
+    })
+    .catch((error: any) => {
+      res.status(404).send(error);
+    });
 }
 
 export async function rejectPurchaseRequestHandler(
   req: Request,
   res: Response
 ) {
+  const userId = res.locals.user._id;
   const purchaseId = req.params.purchaseId;
 
   const purchaseRequest = await findPurchaseRequest({ purchaseId });
   if (!purchaseRequest)
     return res.status(404).send("No purchase request was found.");
+
+  const sellersPurchaseRequest = await isUserAssociatedWithThisProduct({
+    userId,
+  });
+  if (!sellersPurchaseRequest)
+    return res
+      .status(404)
+      .send("This purchase request is not associated with this user.");
 
   const response = await deletePurchaseRequest({ purchaseId });
 

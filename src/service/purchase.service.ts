@@ -16,10 +16,24 @@ export async function findUserPurchaseRequests(
   return PurchaseModel.find({ sellerId: query.userId });
 }
 
+export async function findUserSendedPurchaseRequests(
+  query: FilterQuery<PurchaseDocument>
+) {
+  return PurchaseModel.find({ buyerId: query.userId });
+}
+
 export async function findPurchaseRequest(
   query: FilterQuery<PurchaseDocument>
 ) {
   return PurchaseModel.findById(query.purchaseId);
+}
+
+export async function isUserAssociatedWithThisProduct(
+  query: FilterQuery<PurchaseDocument>
+) {
+  return PurchaseModel.findOne({
+    $or: [{ sellerId: query.userId }, { buyerId: query.userId }],
+  });
 }
 
 export async function deletePurchaseRequest(
