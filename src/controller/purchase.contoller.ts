@@ -3,7 +3,7 @@ import { findProduct, sendPurchaseRequest } from "../service/product.service";
 import {
   checkIfBuyerAlreadyHasRequest,
   checkIfProductAlreadyApproved,
-  deletePurchaseRequest,
+  rejectPurchaseRequest,
   findPurchaseRequest,
   findUserPurchaseRequests,
   findUserSendedPurchaseRequests,
@@ -78,7 +78,7 @@ export async function rejectPurchaseRequestHandler(
       .status(404)
       .send("This purchase request is not associated with this user.");
 
-  const response = await deletePurchaseRequest({ purchaseId });
+  const response = await rejectPurchaseRequest({ purchaseId });
 
   if (!response)
     return res
@@ -118,6 +118,7 @@ export async function approvePurchaseRequestHandler(
   const response = await setPurchaseRequestStatusToApproved({
     purchaseId,
     approvedUserId: payload.approvedUserId,
+    productId: purchaseRequest.productId,
   });
 
   if (!response) return res.status(404);

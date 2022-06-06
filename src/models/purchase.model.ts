@@ -12,6 +12,7 @@ export interface PurchasePayload {
   sellerName: string;
   isApprovedForSelling: boolean;
   approvedUserId: string | undefined;
+  status: "Pending" | "Approved" | "Rejected";
 }
 
 export interface PurchaseDocument extends PurchasePayload, mongoose.Document {
@@ -31,6 +32,7 @@ const purchaseProductSchema = new mongoose.Schema(
     sellerId: { type: String, required: true },
     sellerName: { type: String, required: true },
     approvedUserId: { type: String, default: undefined },
+    status: { type: String, default: "Pending" },
   },
   {
     timestamps: true,
