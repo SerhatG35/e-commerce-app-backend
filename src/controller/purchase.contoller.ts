@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findProduct, sendPurchaseRequest } from "../service/product.service";
+import { findProduct } from "../service/product.service";
 import {
   checkIfBuyerAlreadyHasRequest,
   checkIfProductAlreadyApproved,
@@ -9,6 +9,7 @@ import {
   findUserSendedPurchaseRequests,
   isUserAssociatedWithThisProduct,
   setPurchaseRequestStatusToApproved,
+  sendPurchaseRequest,
 } from "../service/purchase.service";
 import { findUser } from "../service/user.service";
 

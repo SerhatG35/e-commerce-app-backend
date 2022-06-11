@@ -1,5 +1,11 @@
 import { FilterQuery } from "mongoose";
+import ProductModel from "../models/product.model";
 import PurchaseModel, { PurchaseDocument } from "../models/purchase.model";
+import { PurchaseRequestPayloadType } from "../schema/purchase.schema";
+
+export async function sendPurchaseRequest(payload: PurchaseRequestPayloadType) {
+  return PurchaseModel.create(payload);
+}
 
 export async function checkIfBuyerAlreadyHasRequest(
   query: FilterQuery<PurchaseDocument>
@@ -13,14 +19,6 @@ export async function checkIfBuyerAlreadyHasRequest(
 export async function findUserPurchaseRequests(
   query: FilterQuery<PurchaseDocument>
 ) {
-  // const approvedPurchaseRequests = await PurchaseModel.find({
-  //   sellerId: query.userId,
-  // }).exists("approvedUserId", true);
-
-  // const excludedProductIds = approvedPurchaseRequests.map(
-  //   (request) => request.productId
-  // );
-
   return PurchaseModel.find({
     sellerId: query.userId,
     status: "Pending",
@@ -30,11 +28,6 @@ export async function findUserPurchaseRequests(
 export async function findUserSendedPurchaseRequests(
   query: FilterQuery<PurchaseDocument>
 ) {
-  const allUserSendedPurchaseRequests = await PurchaseModel.find({
-    buyerId: query.userId,
-    approvedUserId: query.userId,
-  }).exec();
-  //TODO: BURADAN DEVAM ET NOTLARI OKU
   return PurchaseModel.find({ buyerId: query.userId });
 }
 
@@ -82,6 +75,10 @@ export async function setPurchaseRequestStatusToApproved(
   })
     .ne("_id", query.purchaseId)
     .exec();
+
+  await ProductModel.findByIdAndUpdate(query.productId, {
+    $set: { isItSold: true },
+  });
 
   return PurchaseModel.findByIdAndUpdate(query.purchaseId, {
     $set: { approvedUserId: query.approvedUserId, status: "Approved" },

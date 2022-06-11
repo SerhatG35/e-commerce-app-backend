@@ -12,6 +12,7 @@ export interface ProductInput {
   description: string;
   price: number;
   image: string;
+  isItSold: boolean;
 }
 
 export interface ProductDocument extends ProductInput, mongoose.Document {
@@ -34,6 +35,7 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     image: { type: String, required: true },
     userNameAndSurname: { type: String },
+    isItSold: { type: Boolean, default: false },
   },
   {
     timestamps: true,

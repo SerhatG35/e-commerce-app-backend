@@ -24,6 +24,7 @@ export async function createProductHandler(
       ...body,
       user: userId,
       userNameAndSurname,
+      isItSold:false
     });
     return res.send(product);
   } catch (error) {

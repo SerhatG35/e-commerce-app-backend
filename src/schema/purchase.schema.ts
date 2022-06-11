@@ -14,6 +14,6 @@ export const purchaseRequestSchema = object({
   }),
 });
 
-export type ProductRequestPayloadType = TypeOf<
+export type PurchaseRequestPayloadType = TypeOf<
   typeof purchaseRequestSchema
 >["body"];
