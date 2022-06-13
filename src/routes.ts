@@ -9,6 +9,7 @@ import {
 } from "./controller/product.controller";
 import {
   approvePurchaseRequestHandler,
+  deletePurchaseRequestHandler,
   getPurchaseRequestHandler,
   purchaseRequestHandler,
   rejectPurchaseRequestHandler,
@@ -108,6 +109,12 @@ const routes = (app: Express) => {
     "/api/approve-purchase-request/:purchaseId",
     requireUser,
     approvePurchaseRequestHandler
+  );
+
+  app.delete(
+    "/api/delete-purchase-request/:purchaseId",
+    requireUser,
+    deletePurchaseRequestHandler
   );
 };
 

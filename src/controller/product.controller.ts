@@ -24,7 +24,7 @@ export async function createProductHandler(
       ...body,
       user: userId,
       userNameAndSurname,
-      isItSold:false
+      isItSold: false,
     });
     return res.send(product);
   } catch (error) {
@@ -54,11 +54,13 @@ export async function getProductHandler(
   req: Request<UpdateProductInput["params"]>,
   res: Response
 ) {
-  const productId = req.params.productId;
-  const product = await findProduct(productId);
-  if (!product) return res.sendStatus(404);
-
-  return res.send(product);
+  const productId = req.params.productId.trim();
+  try {
+    const product = await findProduct(productId);
+    return res.send(product);
+  } catch (error) {
+    return res.sendStatus(404);
+  }
 }
 
 export async function getUserProducts(req: Request, res: Response) {

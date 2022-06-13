@@ -13,7 +13,7 @@ export async function checkIfBuyerAlreadyHasRequest(
   return PurchaseModel.find({
     buyerId: query.userId,
     productId: query.productId,
-  });
+  }).ne("status", "Rejected");
 }
 
 export async function findUserPurchaseRequests(
@@ -21,7 +21,6 @@ export async function findUserPurchaseRequests(
 ) {
   return PurchaseModel.find({
     sellerId: query.userId,
-    status: "Pending",
   });
 }
 
@@ -69,10 +68,13 @@ export async function checkIfProductAlreadyApproved(
 export async function setPurchaseRequestStatusToApproved(
   query: FilterQuery<PurchaseDocument>
 ) {
-  await PurchaseModel.updateMany({
-    productId: query.productId,
-    status: "Rejected",
-  })
+  await PurchaseModel.updateMany(
+    { productId: query.productId },
+    {
+      status: "Rejected",
+    }
+  )
+    .where()
     .ne("_id", query.purchaseId)
     .exec();
 
@@ -83,4 +85,8 @@ export async function setPurchaseRequestStatusToApproved(
   return PurchaseModel.findByIdAndUpdate(query.purchaseId, {
     $set: { approvedUserId: query.approvedUserId, status: "Approved" },
   });
+}
+
+export async function deletePurchaseRequest(id: string) {
+  return PurchaseModel.findByIdAndDelete(id);
 }

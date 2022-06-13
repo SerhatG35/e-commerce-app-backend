@@ -10,6 +10,7 @@ import {
   isUserAssociatedWithThisProduct,
   setPurchaseRequestStatusToApproved,
   sendPurchaseRequest,
+  deletePurchaseRequest,
 } from "../service/purchase.service";
 import { findUser } from "../service/user.service";
 
@@ -58,6 +59,24 @@ export async function getPurchaseRequestHandler(req: Request, res: Response) {
     .catch((error: any) => {
       res.status(404).send(error);
     });
+}
+
+export async function deletePurchaseRequestHandler(
+  req: Request,
+  res: Response
+) {
+  const purchaseId = req.params.purchaseId;
+
+  const purchaseRequest = await findPurchaseRequest({ purchaseId });
+  if (!purchaseRequest)
+    return res.status(404).send("No purchase request was found.");
+
+  try {
+    const response = await deletePurchaseRequest(purchaseId);
+    return res.send(response);
+  } catch (error: any) {
+    return res.send(error);
+  }
 }
 
 export async function rejectPurchaseRequestHandler(
