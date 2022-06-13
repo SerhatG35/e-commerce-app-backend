@@ -16,18 +16,22 @@ export async function checkIfBuyerAlreadyHasRequest(
   }).ne("status", "Rejected");
 }
 
-export async function findUserPurchaseRequests(
+export async function findReceivedPurchaseRequests(
   query: FilterQuery<PurchaseDocument>
 ) {
   return PurchaseModel.find({
     sellerId: query.userId,
+    ...(query.filter && { status: { $in: query.filter } }),
   });
 }
 
-export async function findUserSendedPurchaseRequests(
+export async function findSendedPurchaseRequests(
   query: FilterQuery<PurchaseDocument>
 ) {
-  return PurchaseModel.find({ buyerId: query.userId });
+  return PurchaseModel.find({
+    buyerId: query.userId,
+    ...(query.filter && { status: { $in: query.filter } }),
+  });
 }
 
 export async function findPurchaseRequest(
@@ -74,7 +78,6 @@ export async function setPurchaseRequestStatusToApproved(
       status: "Rejected",
     }
   )
-    .where()
     .ne("_id", query.purchaseId)
     .exec();
 

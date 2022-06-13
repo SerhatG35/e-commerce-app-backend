@@ -5,12 +5,12 @@ import {
   checkIfProductAlreadyApproved,
   rejectPurchaseRequest,
   findPurchaseRequest,
-  findUserPurchaseRequests,
-  findUserSendedPurchaseRequests,
   isUserAssociatedWithThisProduct,
   setPurchaseRequestStatusToApproved,
   sendPurchaseRequest,
   deletePurchaseRequest,
+  findReceivedPurchaseRequests,
+  findSendedPurchaseRequests,
 } from "../service/purchase.service";
 import { findUser } from "../service/user.service";
 
@@ -40,25 +40,40 @@ export async function purchaseRequestHandler(req: Request, res: Response) {
   return res.sendStatus(200);
 }
 
-export async function getPurchaseRequestHandler(req: Request, res: Response) {
+export async function getReceivedPurchaseRequestHandler(
+  req: Request,
+  res: Response
+) {
   const userId = req.params.userId;
+  const filter = req.query.filter;
 
   const user = await findUser({ userId });
   if (!user) return res.sendStatus(404);
 
-  Promise.all([
-    await findUserPurchaseRequests({ userId }),
-    await findUserSendedPurchaseRequests({ userId }),
-  ])
-    .then((result) => {
-      return res.send({
-        receivedPurchaseRequests: result[0],
-        sendedPurchaseRequests: result[1],
-      });
-    })
-    .catch((error: any) => {
-      res.status(404).send(error);
-    });
+  try {
+    const result = await findReceivedPurchaseRequests({ userId, filter });
+    return res.send(result);
+  } catch (error) {
+    return res.send(error);
+  }
+}
+
+export async function getSendedPurchaseRequestHandler(
+  req: Request,
+  res: Response
+) {
+  const userId = req.params.userId;
+  const filter = req.query.filter;
+
+  const user = await findUser({ userId });
+  if (!user) return res.sendStatus(404);
+
+  try {
+    const result = await findSendedPurchaseRequests({ userId, filter });
+    return res.send(result);
+  } catch (error) {
+    return res.send(error);
+  }
 }
 
 export async function deletePurchaseRequestHandler(

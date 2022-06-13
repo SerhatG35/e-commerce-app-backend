@@ -5,7 +5,17 @@ import ProductModel, {
 } from "../models/product.model";
 
 export async function createProduct(input: ProductInput) {
-  return await ProductModel.create(input);
+  return ProductModel.create(input);
+}
+
+export async function checkIfUserReachedProductLimit(
+  query: FilterQuery<ProductDocument>
+) {
+  const count = await ProductModel.find({ user: query.userId })
+    .countDocuments()
+    .exec();
+
+  return count;
 }
 
 export async function findProduct(productId: string) {

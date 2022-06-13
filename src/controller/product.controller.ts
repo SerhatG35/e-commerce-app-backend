@@ -4,6 +4,7 @@ import {
   UpdateProductInput,
 } from "../schema/product.schema";
 import {
+  checkIfUserReachedProductLimit,
   createProduct,
   deleteProduct,
   findAllProducts,
@@ -19,6 +20,14 @@ export async function createProductHandler(
   const userId = res.locals.user._id;
   const userNameAndSurname = `${res.locals.user.name} ${res.locals.user.surname}`;
   const body = req.body;
+
+  const productCount = await checkIfUserReachedProductLimit({ userId });
+
+  if (productCount === 5)
+    return res
+      .status(404)
+      .send("You have reached your limit of adding 5 products.");
+
   try {
     const product = await createProduct({
       ...body,
